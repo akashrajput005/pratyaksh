@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Camera, MapPin, Loader2, CheckCircle2, MessageSquare, ShieldCheck, ShieldAlert, BadgeCheck, AlertTriangle, RefreshCw } from "lucide-react";
 import { createIssue } from "@/lib/actions/issue.actions";
-import VoiceReporter from "./VoiceReporter";
+import SolarisUplink from "./SolarisUplink";
 import { cn } from "@/lib/utils";
 import { analyzeEvidence, calculateIntegrity, IntegrityScore } from "@/lib/forensics/exif-guard";
 import { analyzeImage } from "@/lib/ai/vision-system";
@@ -271,9 +271,9 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                                                 />
                                             </label>
                                         ) : (
-                                            <VoiceReporter
+                                            <SolarisUplink
                                                 onStatusChange={setVoiceStatus}
-                                                onTranscript={(text) => setAudit({ description: text, detectedIssues: ["Voice Integrity Log"], confidence: 0.99 })}
+                                                onTranscript={(text: string) => setAudit({ description: text, detectedIssues: ["Voice Integrity Log"], confidence: 0.99 })}
                                             />
                                         )}
 
