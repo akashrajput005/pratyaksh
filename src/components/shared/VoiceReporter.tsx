@@ -144,7 +144,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                         <div className="absolute inset-0 bg-violet-600/10 blur-2xl animate-pulse" />
                         <AlertCircle size={40} className="text-violet-500 animate-bounce" />
                         <div className="space-y-1">
-                            <p className="text-[14px] font-black uppercase tracking-[0.3em] italic text-white">Solaris Recovery Mode V8.0</p>
+                            <p className="text-[14px] font-black uppercase tracking-[0.3em] italic text-white">Solaris Recovery Mode V9.0 ALPHA</p>
                             <p className="text-[9px] font-bold uppercase tracking-widest text-violet-400/60 leading-tight max-w-[250px] mx-auto">
                                 {error}
                             </p>
@@ -226,9 +226,9 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                     <Volume2 size={16} />
                                     <p className="text-[10px] font-black uppercase tracking-widest text-glow">Verified Transcription</p>
                                 </div>
-                                <p className="p-4 glass-card bg-emerald-500/5 border-emerald-500/20 text-sm font-medium leading-relaxed italic text-slate-300">
+                                <div className="p-4 glass-card bg-emerald-500/5 border-emerald-500/20 text-sm font-medium leading-relaxed italic text-slate-300">
                                     "{transcript}"
-                                </p>
+                                </div>
                                 <div className="flex gap-4">
                                     <button
                                         type="button"
@@ -248,7 +248,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
             </div>
 
             <p className="text-center text-[10px] text-slate-600 font-black uppercase tracking-[0.2em]">
-                Active Speech Synthesis: Enabled (EN-IN) | SOLARIS V7.5 STABLE
+                Active Speech Synthesis: Enabled (EN-IN) | SOLARIS V9.0 GOLD ALPHA
             </p>
         </div>
     );
