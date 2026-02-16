@@ -34,6 +34,17 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
             setTranscript("");
             audioChunksRef.current = [];
 
+            // Protocol Audit: Check for Secure Context
+            if (typeof window !== "undefined" && !window.isSecureContext && window.location.hostname !== "localhost") {
+                setError("Uplink Compromised: Voice Core requires HTTPS or Localhost for biometric auth.");
+                return;
+            }
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                setError("Hardware Link Restricted: Browser blocked media device access in this context.");
+                return;
+            }
+
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const mediaRecorder = new MediaRecorder(stream);
 
