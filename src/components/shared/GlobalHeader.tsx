@@ -13,6 +13,12 @@ export default function GlobalHeader() {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [userName, setUserName] = useState<string | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showWatermark, setShowWatermark] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setShowWatermark(false), 10000);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const stored = localStorage.getItem('solaris_user');
@@ -55,6 +61,19 @@ export default function GlobalHeader() {
 
     return (
         <>
+            <AnimatePresence>
+                {showWatermark && (
+                    <motion.div
+                        initial={{ y: -100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -100, opacity: 0 }}
+                        className="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] px-8 py-3 bg-cyan-500 text-black font-black text-xs uppercase tracking-[0.5em] rounded-full shadow-[0_0_50px_rgba(34,211,238,0.8)] border-4 border-white animate-pulse"
+                    >
+                        SOLARIS SUPREME SYNC V22.0 ACTIVE
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <IssueDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
 
             <header className="fixed top-0 right-0 left-0 lg:left-80 h-32 z-[50] px-10 flex items-center justify-between pointer-events-none overflow-visible">
