@@ -144,6 +144,7 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                 longitude: location?.lng || 0,
                 imageUrl: base64Image || "",
                 userId: isAnonymous ? "anonymous_agent" : (JSON.parse(localStorage.getItem('solaris_user') || '{}').id || "user_clerk_123"),
+                userName: isAnonymous ? "Anonymized Citizen" : (JSON.parse(localStorage.getItem('solaris_user') || '{}').name || "Akash Singh"),
                 isAnonymous,
                 isObfuscated,
                 integrityScore: integrity?.score || 0,

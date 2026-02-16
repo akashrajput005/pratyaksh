@@ -12,6 +12,7 @@ export interface CreateIssueParams {
     longitude: number;
     imageUrl: string;
     userId: string;
+    userName?: string;
     integrityScore?: number;
     integrityBadge?: string;
     isAnonymous?: boolean;
@@ -45,10 +46,16 @@ export async function createIssue(params: CreateIssueParams) {
                 data: {
                     clerkId: params.userId,
                     email: `${params.userId}@solaris.grid`,
-                    name: params.isAnonymous ? "Anonymized Citizen" : params.userId === "user_clerk_123" ? "Akash Singh" : params.userId,
+                    name: params.userName || "Akash Singh",
                     role: "CITIZEN",
                     wardId: ward.id
                 }
+            });
+        } else if (params.userName && user.name !== params.userName) {
+            // SYNC IDENTITY: Update name if it changed (e.g. Sharma -> Singh)
+            user = await db.user.update({
+                where: { clerkId: params.userId },
+                data: { name: params.userName }
             });
         }
 
