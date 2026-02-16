@@ -45,7 +45,7 @@ export async function createIssue(params: CreateIssueParams) {
                 data: {
                     clerkId: params.userId,
                     email: `${params.userId}@solaris.grid`,
-                    name: params.isAnonymous ? "Anonymized Citizen" : params.userId === "user_clerk_123" ? "Akash Sharma" : params.userId,
+                    name: params.isAnonymous ? "Anonymized Citizen" : params.userId === "user_clerk_123" ? "Akash Singh" : params.userId,
                     role: "CITIZEN",
                     wardId: ward.id
                 }

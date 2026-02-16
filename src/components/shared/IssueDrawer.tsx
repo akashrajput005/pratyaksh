@@ -143,7 +143,7 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                 latitude: location?.lat || 0,
                 longitude: location?.lng || 0,
                 imageUrl: base64Image || "",
-                userId: isAnonymous ? "anonymous_agent" : "user_clerk_123",
+                userId: isAnonymous ? "anonymous_agent" : (JSON.parse(localStorage.getItem('solaris_user') || '{}').id || "user_clerk_123"),
                 isAnonymous,
                 isObfuscated,
                 integrityScore: integrity?.score || 0,

@@ -15,7 +15,7 @@ export default function SettingsPage() {
     const [isSensorActive, setIsSensorActive] = useState(false);
     const [verifying, setVerifying] = useState(false);
     const [verificationStatus, setVerificationStatus] = useState<"none" | "pending" | "success">("none");
-    const [name, setName] = useState("Akash Sharma");
+    const [name, setName] = useState("Akash Singh");
     const [isEditingName, setIsEditingName] = useState(false);
     const [tempName, setTempName] = useState(name);
     const [isSavingName, setIsSavingName] = useState(false);

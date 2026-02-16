@@ -27,10 +27,6 @@ export default function LandingPage() {
 
     return (
         <div className="relative min-h-screen bg-[#05010d] overflow-x-hidden selection:bg-rose-500/30 space-y-32 py-20 overflow-hidden">
-            {/* V24 NUCLEAR MARKER */}
-            <div className="fixed top-0 left-0 right-0 h-1 z-[10000] bg-rose-500 shadow-[0_0_20px_#f43f5e] uppercase text-[10px] font-black text-white flex items-center justify-center tracking-[1em]">
-                FORCE SYNC V24.1 ACTIVE - {new Date().toLocaleTimeString()}
-            </div>
             {/* Hypersaturation Background Layer */}
             <div className="fixed inset-0 bg-mesh-vibrant opacity-10 blur-3xl z-[-1]" />
 

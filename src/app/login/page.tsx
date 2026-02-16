@@ -17,7 +17,7 @@ export default function LoginPage() {
 
         // Persistent Session Uplink
         localStorage.setItem('solaris_user', JSON.stringify({
-            name: "Akash Sharma",
+            name: "Akash Singh",
             role: "Solaris Pro",
             id: "user_sol_777"
         }));
