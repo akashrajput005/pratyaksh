@@ -46,17 +46,20 @@ export async function createIssue(params: CreateIssueParams) {
                 data: {
                     clerkId: params.userId,
                     email: `${params.userId}@solaris.grid`,
-                    name: params.userName || "Akash Singh",
+                    name: (params.userName === "Akash Sharma" || !params.userName) ? "Akash Singh" : params.userName,
                     role: "CITIZEN",
                     wardId: ward.id
                 }
             });
-        } else if (params.userName && user.name !== params.userName) {
-            // SYNC IDENTITY: Update name if it changed (e.g. Sharma -> Singh)
-            user = await db.user.update({
-                where: { clerkId: params.userId },
-                data: { name: params.userName }
-            });
+        } else {
+            // SYNC IDENTITY: Always force "Singh" if "Sharma" or unknown
+            const targetName = (params.userName === "Akash Sharma" || !params.userName) ? "Akash Singh" : params.userName;
+            if (user.name !== targetName) {
+                user = await db.user.update({
+                    where: { clerkId: params.userId },
+                    data: { name: targetName }
+                });
+            }
         }
 
         const issue = await db.issue.create({
@@ -82,9 +85,13 @@ export async function createIssue(params: CreateIssueParams) {
         revalidatePath("/map");
         revalidatePath("/rankings");
         return { success: true, message: "Issue reported successfully to the Accountability Grid.", issueId: issue.id };
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error creating issue:", error);
-        return { success: false, message: "Failed to report issue. Please try again." };
+        return {
+            success: false,
+            message: `Uplink Rejected: ${error.message || "Prisma Handshake Timeout"}`,
+            details: error.stack
+        };
     }
 }
 

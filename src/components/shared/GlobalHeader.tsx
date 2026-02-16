@@ -23,6 +23,13 @@ export default function GlobalHeader() {
             if (stored) {
                 try {
                     const data = JSON.parse(stored);
+
+                    // FORCED IDENTITY MIGRATION: Purge Sharma remnants
+                    if (data.name === "Akash Sharma" || !data.name) {
+                        data.name = "Akash Singh";
+                        localStorage.setItem('solaris_user', JSON.stringify(data));
+                    }
+
                     if (data.name) setUserName(data.name);
                     setIsLoggedIn(true);
 

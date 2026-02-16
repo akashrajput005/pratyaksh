@@ -42,6 +42,11 @@ export default function SettingsPage() {
         }
         if (storedUser) {
             const userData = JSON.parse(storedUser);
+            // FORCED IDENTITY MIGRATION
+            if (userData.name === "Akash Sharma" || !userData.name) {
+                userData.name = "Akash Singh";
+                localStorage.setItem('solaris_user', JSON.stringify(userData));
+            }
             if (userData.name) setName(userData.name);
         }
     }, []);
