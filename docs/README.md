@@ -22,7 +22,10 @@ Welcome to the technical documentation for **Pratyaksh (Visible Proof)**, the "S
 *   Lifecycle of an accountability complaint.
 *   AI Semantic Audit and resolution verification.
 
-### 5. [Developer Setup](./SETUP.md)
+### 5. [Deployment Guide](./DEPLOYMENT.md)
+*   Steps for Vercel launch and production configuration.
+
+### 6. [Developer Setup](./SETUP.md)
 *   Environment variables, database migrations, and local verification.
 
 ---
