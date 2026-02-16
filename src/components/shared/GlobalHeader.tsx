@@ -140,7 +140,7 @@ export default function GlobalHeader() {
                                                             <BadgeCheck size={12} /> {user.role}
                                                         </p>
                                                         <p className="text-[8px] font-black text-rose-500 uppercase tracking-widest animate-pulse">
-                                                            SOLARIS V15.1 SYNCED
+                                                            SOLARIS V15.2 SYNCED
                                                         </p>
                                                     </div>
                                                 </div>
