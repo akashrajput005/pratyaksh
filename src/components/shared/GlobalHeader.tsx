@@ -15,6 +15,8 @@ export default function GlobalHeader() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState("GUEST_LINK_PENDING");
 
+    const pathname = usePathname();
+
     useEffect(() => {
         const syncSession = async () => {
             const stored = localStorage.getItem('solaris_user');
@@ -46,8 +48,6 @@ export default function GlobalHeader() {
         role: userRole,
         avatar: userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase() : "??"
     };
-
-    const pathname = usePathname();
 
     const getTitle = () => {
         const segment = pathname.split("/").pop();
