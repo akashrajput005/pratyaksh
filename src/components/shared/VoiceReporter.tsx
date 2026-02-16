@@ -139,37 +139,17 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="flex flex-col items-center gap-4 text-rose-500 text-center relative"
+                        className="flex flex-col items-center gap-4 text-violet-400 text-center relative"
                     >
-                        <div className="absolute inset-0 bg-rose-500/10 blur-2xl animate-pulse" />
-                        <AlertCircle size={40} className="animate-bounce" />
+                        <div className="absolute inset-0 bg-violet-600/10 blur-2xl animate-pulse" />
+                        <AlertCircle size={40} className="text-violet-500 animate-bounce" />
                         <div className="space-y-1">
-                            <p className="text-[12px] font-black uppercase tracking-[0.3em] italic">Matrix Interference</p>
-                            <p className="text-[9px] font-bold uppercase tracking-widest text-rose-500/60 leading-tight max-w-[250px] mx-auto">
+                            <p className="text-[14px] font-black uppercase tracking-[0.3em] italic text-white">Solaris Recovery Mode V8.0</p>
+                            <p className="text-[9px] font-bold uppercase tracking-widest text-violet-400/60 leading-tight max-w-[250px] mx-auto">
                                 {error}
-                                {error.includes("Permission") && (
-                                    <div className="mt-4 p-3 bg-white/5 border border-sky-500/30 rounded-2xl text-left space-y-2">
-                                        <p className="text-sky-400 font-black text-[8px] animate-pulse">RECOVERY PROTOCOL:</p>
-                                        <div className="flex items-start gap-2">
-                                            <div className="w-4 h-4 rounded bg-sky-500/20 flex items-center justify-center text-[10px] text-sky-400 font-black">1</div>
-                                            <p className="text-white/80">Look at address bar (Top Left)</p>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <div className="w-4 h-4 rounded bg-sky-500/20 flex items-center justify-center text-[10px] text-sky-400 font-black">2</div>
-                                            <p className="text-white/80">Click the <span className="text-sky-400 underline">Shield/Lock/Slider</span> icon</p>
-                                        </div>
-                                        <div className="flex items-start gap-2">
-                                            <div className="w-4 h-4 rounded bg-sky-500/20 flex items-center justify-center text-[10px] text-sky-400 font-black">3</div>
-                                            <p className="text-white/80">Toggle Microphone to <span className="text-emerald-400">ON/Allow</span></p>
-                                        </div>
-                                    </div>
-                                )}
-                                {error.includes("Uplink Compromised") && (
-                                    <p className="mt-2 text-sky-400 font-black italic">Note: Remote IP access (non-https) is blocked by browser security. Use localhost:3000.</p>
-                                )}
                             </p>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col gap-3 w-full">
                             <button
                                 type="button"
                                 onClick={() => {
@@ -177,24 +157,22 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                     setIsProcessing(true);
                                     setTimeout(() => setIsProcessing(false), 500);
                                 }}
-                                className="px-6 py-2 bg-rose-500/10 border border-rose-500/30 rounded-full text-[9px] font-black uppercase text-rose-500 hover:bg-rose-500/20 transition-all backdrop-blur-md"
+                                className="px-6 py-2 bg-violet-500/10 border border-violet-500/30 rounded-xl text-[9px] font-black uppercase text-violet-400 hover:bg-violet-500/20 transition-all backdrop-blur-md"
                             >
                                 Reconnect Uplink
                             </button>
-                            {error.includes("Fatal") && (
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setError(null);
-                                        const mock = "Simulated Solaris uplink active. Reporting a significant civic breach in Ward K-West. Visual evidence corroborates asphalt degradation.";
-                                        setTranscript(mock);
-                                        if (onTranscript) onTranscript(mock);
-                                    }}
-                                    className="px-6 py-2 bg-sky-500/10 border border-sky-500/30 rounded-full text-[9px] font-black uppercase text-sky-400 hover:bg-sky-500/20 transition-all backdrop-blur-md haptic-pulse"
-                                >
-                                    Manual Uplink (AI Bypass)
-                                </button>
-                            )}
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setError(null);
+                                    const mock = "Simulated Solaris uplink active. Reporting a significant civic breach. Visual evidence corroborates asphalt degradation and drainage failure.";
+                                    setTranscript(mock);
+                                    if (onTranscript) onTranscript(mock);
+                                }}
+                                className="px-6 py-3 bg-sky-500/20 border border-sky-400/50 rounded-xl text-[10px] font-black uppercase text-white hover:bg-sky-500/40 transition-all haptic-pulse shadow-[0_0_20px_rgba(56,189,248,0.3)] animate-pulse"
+                            >
+                                Activate Manual Uplink (Override)
+                            </button>
                         </div>
                     </motion.div>
                 ) : (
