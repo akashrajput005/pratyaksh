@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum IssueStatus {
+  OPEN
+  PENDING_VERIFICATION
+  RESOLVED
+  REJECTED
+}
+
+enum UserRole {
+  CITIZEN
+  OFFICIAL
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  role      UserRole @default(CITIZEN)
+  wardId    String?  @db.ObjectId
+  ward      Ward?    @relation(fields: [wardId], references: [id])
+  issues    Issue[]  @relation("CitizenIssues")
+  assigned  Issue[]  @relation("OfficialIssues")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Issue {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  description    String
+  category       String
+  latitude       Float
+  longitude      Float
+  imageUrl       String
+  fixImageUrl    String?
+  status         IssueStatus @default(OPEN)
+  severity       Int         @default(1)
+  
+  // Forensics & Privacy
+  integrityScore Int?        @default(0)
+  integrityBadge String?     @default("UNVERIFIED")
+  isAnonymous    Boolean     @default(false)
+  isObfuscated   Boolean     @default(true)
+
+  citizenId      String      @db.ObjectId
+  citizen        User        @relation("CitizenIssues", fields: [citizenId], references: [id])
+  officialId     String?     @db.ObjectId
+  official       User?       @relation("OfficialIssues", fields: [officialId], references: [id])
+  wardId         String      @db.ObjectId
+  ward           Ward        @relation(fields: [wardId], references: [id])
+  resolvedAt     DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Ward {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name            String   @unique
+  performanceScore Float    @default(0.0)
+  resolutionRate  Float    @default(0.0)
+  avgResponseTime Float?
+  users           User[]
+  issues          Issue[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
