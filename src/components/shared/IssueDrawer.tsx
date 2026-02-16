@@ -353,16 +353,16 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                                         )}
 
                                         <button
-                                            disabled={loading || (!file && !audit) || voiceStatus === "recording" || voiceStatus === "error"}
+                                            disabled={loading || (!file && !audit) || voiceStatus === "recording"}
                                             type="submit"
                                             className={cn(
                                                 "w-full h-24 button-vibrant shadow-[0_0_50px_rgba(139,92,246,0.5)] haptic-pulse flex items-center justify-center gap-6 text-[14px]",
-                                                (voiceStatus === "error" || voiceStatus === "recording") && "opacity-50 cursor-not-allowed grayscale"
+                                                voiceStatus === "recording" && "opacity-50 cursor-not-allowed grayscale"
                                             )}
                                         >
                                             {loading ? <Loader2 className="animate-spin w-8 h-8" /> : (
                                                 <>
-                                                    {voiceStatus === "error" ? "VOICE CORE OFFLINE" : voiceStatus === "recording" ? "RECORDING EVIDENCE..." : "DEPLOY TO GRID"}
+                                                    {voiceStatus === "recording" ? "RECORDING EVIDENCE..." : "DEPLOY TO GRID"}
                                                     <MessageSquare size={24} fill="white" />
                                                 </>
                                             )}
