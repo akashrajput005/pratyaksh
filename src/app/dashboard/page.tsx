@@ -175,7 +175,7 @@ export default function Dashboard() {
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <div className="w-12 h-1 bg-white/5 rounded-full overflow-hidden">
-                                            <motion.div initial={{ width: 0 }} animate={{ width: `${w.score * 10}%` }} className="h-full bg-neon-violet" />
+                                            <motion.div initial={{ width: 0 }} animate={{ width: `${Number(w.score) * 10}%` }} className="h-full bg-neon-violet" />
                                         </div>
                                         <span className="text-xs font-black text-neon-violet">{w.score}</span>
                                     </div>
