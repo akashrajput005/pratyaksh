@@ -48,7 +48,7 @@ export default function LandingPage() {
                         className="text-7xl md:text-[10rem] font-black tracking-tightest leading-[0.85] uppercase italic text-white"
                     >
                         UNFAKEABLE <br />
-                        <span className="text-gradient-vibrant">TRUTH.</span>
+                        <span className="text-gradient-vibrant">TRUTH V17.1.</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0 }}
