@@ -135,9 +135,14 @@ export default function GlobalHeader() {
                                                 </div>
                                                 <div>
                                                     <p className="text-sm font-black text-white uppercase truncate">{user.name}</p>
-                                                    <p className="text-[10px] font-black text-neon-gold uppercase tracking-widest mt-1 flex items-center gap-1">
-                                                        <BadgeCheck size={12} /> {user.role}
-                                                    </p>
+                                                    <div className="flex flex-col gap-1 mt-1">
+                                                        <p className="text-[10px] font-black text-neon-gold uppercase tracking-widest flex items-center gap-1">
+                                                            <BadgeCheck size={12} /> {user.role}
+                                                        </p>
+                                                        <p className="text-[8px] font-black text-rose-500 uppercase tracking-widest animate-pulse">
+                                                            SOLARIS V15.1 SYNCED
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
 
