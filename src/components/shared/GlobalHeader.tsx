@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function GlobalHeader() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const [userName, setUserName] = useState("Akash Sharma");
+    const [userName, setUserName] = useState<string | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function GlobalHeader() {
         fetchStats();
     }, [isProfileOpen]);
 
-    const [userRole, setUserRole] = useState("Solaris Citizen");
+    const [userRole, setUserRole] = useState("GUEST_LINK_PENDING");
 
     const handleSignOut = () => {
         localStorage.removeItem('solaris_user');
@@ -39,9 +39,9 @@ export default function GlobalHeader() {
     };
 
     const user = {
-        name: userName,
+        name: userName || "UNAUTHORIZED_GHOST",
         role: userRole,
-        avatar: userName.split(' ').map(n => n[0]).join('').toUpperCase() || "US"
+        avatar: userName ? userName.split(' ').map(n => n[0]).join('').toUpperCase() : "??"
     };
 
     const pathname = usePathname();

@@ -39,6 +39,14 @@ export default function Dashboard() {
         impactXP: "0",
         wardInfluence: "PENDING"
     });
+    const [chartData, setChartData] = useState<number[]>([40, 85, 55, 100, 75, 90, 60, 95]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setChartData(prev => prev.map(v => Math.max(30, Math.min(100, v + (Math.random() * 20 - 10)))));
+        }, 4000);
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         // Prime the engine only on client mount
@@ -96,7 +104,7 @@ export default function Dashboard() {
                     description="Aggregate resolution speed and citizen trust metrics."
                     header={
                         <div className="flex gap-4 w-full h-full p-8 items-end bg-gradient-to-t from-cyan-500/10 to-transparent rounded-3xl border border-white/5">
-                            {[40, 85, 55, 100, 75, 90, 60, 95].map((h, i) => (
+                            {chartData.map((h, i) => (
                                 <motion.div
                                     key={i}
                                     initial={{ height: 0 }}
