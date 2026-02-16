@@ -61,9 +61,9 @@ export default function Dashboard() {
     }, []);
 
     const wards = [
-        { name: "Ward K-West (Andheri)", score: 9.4, rank: 1 },
-        { name: "Ward H-East (Bandra)", score: 8.7, rank: 3 },
-        { name: "Ward A (Colaba)", score: 7.5, rank: 9 },
+        { name: "Ward K-West (Andheri)", score: (9.4 + (Math.sin(Date.now() / 5000) * 0.2)).toFixed(1), rank: 1 },
+        { name: "Ward H-East (Bandra)", score: (8.7 + (Math.cos(Date.now() / 5000) * 0.2)).toFixed(1), rank: 3 },
+        { name: "Ward A (Colaba)", score: (7.5 + (Math.sin(Date.now() / 7000) * 0.2)).toFixed(1), rank: 9 },
     ];
 
     return (
