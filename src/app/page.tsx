@@ -11,6 +11,12 @@ import { solarisEngine, GridMetrics } from "@/lib/solaris-engine";
 export default function LandingPage() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [metrics, setMetrics] = useState<GridMetrics>(solarisEngine.getLiveMetrics());
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem('solaris_user');
+        if (stored) setIsLoggedIn(true);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -76,9 +82,15 @@ export default function LandingPage() {
                     <Link href="/dashboard" className="h-24 px-12 bg-white/5 border border-white/10 text-white rounded-[2rem] font-black uppercase tracking-[0.3em] flex items-center gap-6 hover:bg-white/10 transition-all haptic-pulse backdrop-blur-md text-sm">
                         ENTER GRID <Globe size={24} className="text-neon-cyan" />
                     </Link>
-                    <Link href="/login" className="h-24 px-12 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-[2rem] font-black uppercase tracking-[0.3em] flex items-center gap-6 hover:bg-rose-500/20 transition-all haptic-pulse backdrop-blur-md text-sm">
-                        LOGIN TO GRID <ScanFace size={24} />
-                    </Link>
+                    {!isLoggedIn ? (
+                        <Link href="/login" className="h-24 px-12 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-[2rem] font-black uppercase tracking-[0.3em] flex items-center gap-6 hover:bg-rose-500/20 transition-all haptic-pulse backdrop-blur-md text-sm">
+                            LOGIN TO GRID <ScanFace size={24} />
+                        </Link>
+                    ) : (
+                        <Link href="/dashboard" className="h-24 px-12 bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan rounded-[2rem] font-black uppercase tracking-[0.3em] flex items-center gap-6 hover:bg-neon-cyan/20 transition-all haptic-pulse backdrop-blur-md text-sm">
+                            GOTO DASHBOARD <ShieldCheck size={24} />
+                        </Link>
+                    )}
                 </motion.div>
 
                 {/* WhatsApp Community Pulse - FIXED POSITIONING */}

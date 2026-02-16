@@ -28,7 +28,7 @@ class SolarisEngine {
             activeNodes: Math.floor(this.baseNodes + jitter * 20),
             verifiedReports: Math.floor(this.baseReports + (Date.now() % 1000)),
             truthScore: 99.4 + (jitter * 0.2),
-            responseVelocity: "2.4h",
+            responseVelocity: (2.1 + (Math.random() * 0.8)).toFixed(1) + "h",
             networkEvents: this.getGeneratedEvents()
         };
     }

@@ -12,12 +12,14 @@ export default function GlobalHeader() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [userName, setUserName] = useState("Akash Sharma");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         const stored = localStorage.getItem('solaris_user');
         if (stored) {
             const data = JSON.parse(stored);
             if (data.name) setUserName(data.name);
+            setIsLoggedIn(true);
         }
 
         // Sync rank with dashboard logic
@@ -74,16 +76,23 @@ export default function GlobalHeader() {
                 </div>
 
                 <div className="flex items-center gap-6 pointer-events-auto">
-                    {pathname === "/" || pathname === "/login" ? (
+                    {!isLoggedIn ? (
                         <Link
                             href="/login"
-                            className="h-14 px-8 bg-rose-500 text-white text-[11px] font-black uppercase tracking-widest rounded-2xl flex items-center gap-3 shadow-xl haptic-pulse"
+                            className="h-14 px-8 bg-rose-500 text-white text-[11px] font-black uppercase tracking-widest rounded-2xl flex items-center gap-3 shadow-xl haptic-pulse pointer-events-auto"
                         >
                             <ScanFace size={18} />
                             Citizen Login
                         </Link>
                     ) : (
                         <>
+                            <Link
+                                href="/dashboard"
+                                className="h-14 px-8 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-black uppercase tracking-widest rounded-2xl flex items-center gap-3 shadow-xl haptic-pulse pointer-events-auto backdrop-blur-md"
+                            >
+                                <Zap size={18} />
+                                Enter Grid
+                            </Link>
                             {/* Pulsing WhatsApp Action */}
                             <motion.button
                                 animate={{

@@ -21,6 +21,7 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
     const [locationError, setLocationError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
     const [integrity, setIntegrity] = useState<IntegrityScore | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [audit, setAudit] = useState<any>(null);
@@ -117,6 +118,7 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        setError(null);
 
         try {
             let finalAudit = audit;
@@ -166,9 +168,11 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                         window.location.reload();
                     }, 500);
                 }, 1500);
+            } else {
+                setError(result.message);
             }
         } catch (error) {
-            // Matrix Connection Fail-safe
+            setError("Matrix Uplink Failure: The community node rejected the P2P handshake.");
         } finally {
             setLoading(false);
         }
@@ -352,6 +356,18 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                                                     </div>
                                                 </div>
                                             </div>
+                                        )}
+
+                                        {error && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="mt-6 p-6 bg-rose-500/10 border border-rose-500/20 rounded-3xl"
+                                            >
+                                                <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest text-center">
+                                                    🚨 {error}
+                                                </p>
+                                            </motion.div>
                                         )}
 
                                         <button
