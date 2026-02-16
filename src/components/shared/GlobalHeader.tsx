@@ -117,63 +117,77 @@ export default function GlobalHeader() {
                                 <PlusCircle size={18} />
                                 Deploy Proof
                             </button>
-                        </>
-                    )}
 
-                    <div className="relative">
-                        <button
-                            onClick={() => setIsProfileOpen(!isProfileOpen)}
-                            className="h-14 w-14 rounded-2xl bg-gradient-to-br from-neon-violet to-neon-pink p-[2px] haptic-pulse shadow-lg"
-                        >
-                            <div className="w-full h-full bg-[#020617] rounded-[calc(1rem-2px)] flex items-center justify-center text-white font-black text-sm">
-                                {user.avatar}
-                            </div>
-                        </button>
+                            <div className="relative">
+                                <button
+                                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                    className="h-14 w-14 rounded-2xl bg-gradient-to-br from-neon-violet to-neon-pink p-[2px] haptic-pulse shadow-lg"
+                                >
+                                    <div className="w-full h-full bg-[#020617] rounded-[calc(1rem-2px)] flex items-center justify-center text-white font-black text-sm">
+                                        {user.avatar}
+                                    </div>
+                                </button>
 
-                        <AnimatePresence>
-                            {isProfileOpen && (
-                                <>
-                                    <div className="fixed inset-0 z-[-1]" onClick={() => setIsProfileOpen(false)} />
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -40, scale: 0.9 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        exit={{ opacity: 0, y: -40, scale: 0.9 }}
-                                        className="absolute right-0 top-full mt-32 w-80 bento-tile p-8 shadow-[0_50px_120px_rgba(0,0,0,0.9)] z-[100] border-white/10 overflow-visible"
-                                    >
-                                        <div className="space-y-8">
-                                            <div className="flex items-center gap-5 border-b border-white/5 pb-8">
-                                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-neon-violet to-neon-cyan flex items-center justify-center text-white font-black text-lg">
-                                                    {user.avatar}
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-black text-white uppercase truncate">{user.name}</p>
-                                                    <div className="flex flex-col gap-1 mt-1">
-                                                        <p className="text-[10px] font-black text-neon-gold uppercase tracking-widest flex items-center gap-1">
-                                                            <BadgeCheck size={12} /> {user.role}
-                                                        </p>
+                                <AnimatePresence>
+                                    {isProfileOpen && (
+                                        <>
+                                            <div className="fixed inset-0 z-[-1]" onClick={() => setIsProfileOpen(false)} />
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -40, scale: 0.9 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: -40, scale: 0.9 }}
+                                                className="absolute right-0 top-full mt-32 w-80 bento-tile p-8 shadow-[0_50px_120px_rgba(0,0,0,0.9)] z-[100] border-white/10 overflow-visible"
+                                            >
+                                                <div className="space-y-8">
+                                                    <div className="flex items-center gap-5 border-b border-white/5 pb-8">
+                                                        <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-neon-violet to-neon-pink p-[2px]">
+                                                            <div className="w-full h-full bg-[#020617] rounded-[calc(1rem-3px)] flex items-center justify-center text-xl font-black text-white">
+                                                                {user.avatar}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="font-black text-white text-lg tracking-tight uppercase italic">{user.name}</h3>
+                                                            <p className="text-[10px] font-black text-neon-cyan uppercase tracking-widest flex items-center gap-2 mt-1">
+                                                                <BadgeCheck size={12} />
+                                                                {user.role}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <button className="w-full h-14 px-6 rounded-2xl bg-white/5 hover:bg-white/10 text-white text-[11px] font-black uppercase tracking-widest flex items-center justify-between transition-all group overflow-hidden relative">
+                                                            <div className="flex items-center gap-4">
+                                                                <SettingsIcon size={18} className="text-white/40 group-hover:text-white transition-colors" />
+                                                                <span>Grid Preferences</span>
+                                                            </div>
+                                                            <div className="absolute right-0 w-1 h-0 bg-neon-cyan group-hover:h-full transition-all duration-500" />
+                                                        </button>
+
+                                                        <button
+                                                            onClick={handleSignOut}
+                                                            className="w-full h-14 px-6 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 text-[11px] font-black uppercase tracking-widest flex items-center justify-between transition-all group overflow-hidden relative"
+                                                        >
+                                                            <div className="flex items-center gap-4">
+                                                                <LogOut size={18} />
+                                                                <span>Sever Uplink</span>
+                                                            </div>
+                                                            <div className="absolute right-0 w-1 h-0 bg-rose-500 group-hover:h-full transition-all duration-500" />
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="pt-4 border-t border-white/5">
                                                         <p className="text-[8px] font-black text-rose-500 uppercase tracking-widest animate-pulse">
-                                                            SOLARIS V15.2 SYNCED
+                                                            SOLARIS V22.2 SYNCED
                                                         </p>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <Link href="/settings" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 text-white/60 hover:text-white text-[11px] font-black uppercase tracking-widest transition-all group">
-                                                    <SettingsIcon size={18} className="group-hover:rotate-90 transition-transform duration-500" />
-                                                    Settings Grid
-                                                </Link>
-                                                <button onClick={handleSignOut} className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-neon-pink/10 text-neon-pink text-[11px] font-black uppercase tracking-widest transition-all group">
-                                                    <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />
-                                                    Disconnect
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                </>
-                            )}
-                        </AnimatePresence>
-                    </div>
+                                            </motion.div>
+                                        </>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </>
+                    )}
                 </div>
             </header>
         </>
