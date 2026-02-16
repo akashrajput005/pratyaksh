@@ -55,7 +55,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
             };
 
             mediaRecorder.onstop = async () => {
-                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
                 await processAudio(audioBlob);
                 stream.getTracks().forEach(track => track.stop());
             };
@@ -79,10 +79,10 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
     };
 
     const processAudio = async (blob: Blob) => {
-        try {
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = async () => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = async () => {
+            try {
                 const base64Audio = reader.result as string;
                 console.log("Solaris: Uplinking audio to Gemini AI Neural Link...");
 
@@ -94,13 +94,13 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                 } else {
                     throw new Error(result.error || "AI Uplink Failed");
                 }
+            } catch (err: any) {
+                console.error("Processing Failed:", err);
+                setError(err.message || "Fatal Uplink Error: AI Neural Link unreachable.");
+            } finally {
                 setIsProcessing(false);
-            };
-        } catch (err: any) {
-            console.error("Processing Failed:", err);
-            setError("Fatal Uplink Error: AI Neural Link unreachable.");
-            setIsProcessing(false);
-        }
+            }
+        };
     };
 
     const activateNuclearBypass = () => {

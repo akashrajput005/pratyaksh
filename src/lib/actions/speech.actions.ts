@@ -24,7 +24,7 @@ export async function transcribeAudio(base64Audio: string) {
                             { text: "Transcribe the following audio precisely. Respond ONLY with the transcription text, nothing else." },
                             {
                                 inline_data: {
-                                    mime_type: "audio/wav",
+                                    mime_type: "audio/webm",
                                     data: cleanBase64
                                 }
                             }
