@@ -1,4 +1,5 @@
 "use client";
+// [NUCLEAR DEPLOYMENT HEARTBEAT: 2026-02-17-04-45-SYNC]
 
 import { motion } from "framer-motion";
 import { PlusCircle, ShieldCheck, Map, Users, MessageSquare, Zap, BadgeCheck, Globe, ScanFace } from "lucide-react";
