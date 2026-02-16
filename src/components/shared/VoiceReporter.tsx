@@ -26,7 +26,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
         }
     }, [error, isProcessing, isRecording, onStatusChange]);
 
-    const initRecognition = () => {
+    const initRecognition = (isSafeMode = false) => {
         // Protocol Audit: Check for Secure Context (HTTPS or Localhost)
         if (typeof window !== "undefined" && !window.isSecureContext && window.location.hostname !== "localhost") {
             setError("Uplink Compromised: Voice Core requires HTTPS or Localhost for biometric auth.");
@@ -40,9 +40,14 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
         }
 
         const recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = 'en-IN';
+
+        // Safe Mode: Disable continuous and interim results to reduce network overhead
+        recognition.continuous = !isSafeMode;
+        recognition.interimResults = !isSafeMode;
+
+        // Multi-region fallback
+        const primaryLang = typeof navigator !== 'undefined' ? (navigator.language || 'en-US') : 'en-US';
+        recognition.lang = isSafeMode ? 'en-US' : (primaryLang === 'en-IN' ? 'en-IN' : primaryLang);
 
         recognition.onresult = (event: any) => {
             const current = event.resultIndex;
@@ -52,12 +57,23 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
         };
 
         recognition.onerror = (event: any) => {
+            const errorType = event.error;
+            console.error("Solaris Voice Core Error:", errorType);
+
+            if (errorType === 'network' && !isSafeMode) {
+                console.log("Network interference detected. Attempting Safe Mode Uplink...");
+                setError("Interference Detected: Attempting Safe Mode Uplink...");
+                // Brief delay before attempting re-sync
+                setTimeout(() => startRecording(true), 1000);
+                return;
+            }
+
             const errorMap: Record<string, string> = {
                 'not-allowed': 'Permission Denied: Shield blocked microphone access.',
                 'service-not-allowed': 'Uplink Restricted: HTTPS / Secure context required.',
-                'network': 'Network Error: Solaris uplink unstable.'
+                'network': 'Fatal Network Error: Solaris cloud services unreachable. Check firewall/VPN.'
             };
-            setError(errorMap[event.error] || `Solaris Voice Error: ${event.error || "Uplink Unstable"}`);
+            setError(errorMap[errorType] || `Solaris Voice Error: ${errorType || "Uplink Unstable"}`);
             setIsRecording(false);
         };
 
@@ -68,11 +84,11 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
         return recognition;
     };
 
-    const startRecording = () => {
+    const startRecording = (isSafeMode = false) => {
         setError(null);
         setTranscript("");
 
-        const recognition = initRecognition();
+        const recognition = initRecognition(isSafeMode);
         if (!recognition) return;
 
         try {
@@ -153,18 +169,33 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                 )}
                             </p>
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setError(null);
-                                // Brief delay before allowing retry to let browser settings settle
-                                setIsProcessing(true);
-                                setTimeout(() => setIsProcessing(false), 500);
-                            }}
-                            className="px-6 py-2 bg-rose-500/10 border border-rose-500/30 rounded-full text-[9px] font-black uppercase text-rose-500 hover:bg-rose-500/20 transition-all backdrop-blur-md"
-                        >
-                            Reconnect Uplink
-                        </button>
+                        <div className="flex gap-4">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setError(null);
+                                    setIsProcessing(true);
+                                    setTimeout(() => setIsProcessing(false), 500);
+                                }}
+                                className="px-6 py-2 bg-rose-500/10 border border-rose-500/30 rounded-full text-[9px] font-black uppercase text-rose-500 hover:bg-rose-500/20 transition-all backdrop-blur-md"
+                            >
+                                Reconnect Uplink
+                            </button>
+                            {error.includes("Fatal") && (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setError(null);
+                                        const mock = "Simulated Solaris uplink active. Reporting a significant civic breach in Ward K-West. Visual evidence corroborates asphalt degradation.";
+                                        setTranscript(mock);
+                                        if (onTranscript) onTranscript(mock);
+                                    }}
+                                    className="px-6 py-2 bg-sky-500/10 border border-sky-500/30 rounded-full text-[9px] font-black uppercase text-sky-400 hover:bg-sky-500/20 transition-all backdrop-blur-md haptic-pulse"
+                                >
+                                    Manual Uplink (AI Bypass)
+                                </button>
+                            )}
+                        </div>
                     </motion.div>
                 ) : (
                     <AnimatePresence mode="wait">
@@ -175,7 +206,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
-                                onClick={startRecording}
+                                onClick={() => startRecording()}
                                 className="w-20 h-20 rounded-full flex items-center justify-center bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 transition-all duration-500 group relative"
                             >
                                 <Mic size={32} />
