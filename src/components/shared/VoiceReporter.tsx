@@ -269,8 +269,8 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                 )}
             </div>
 
-            <p className="text-center text-[10px] text-slate-600 font-medium">
-                Active Speech Synthesis: Enabled (EN-IN)
+            <p className="text-center text-[10px] text-slate-600 font-black uppercase tracking-[0.2em]">
+                Active Speech Synthesis: Enabled (EN-IN) | SOLARIS V7.5 STABLE
             </p>
         </div>
     );
