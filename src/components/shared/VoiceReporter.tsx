@@ -149,29 +149,34 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                 {error}
                             </p>
                         </div>
-                        <div className="flex flex-col gap-3 w-full">
+                        <div className="flex flex-col gap-4 w-full">
                             <button
                                 type="button"
                                 onClick={() => {
+                                    console.log("Solaris: Attempting Manual Recon...");
                                     setError(null);
                                     setIsProcessing(true);
                                     setTimeout(() => setIsProcessing(false), 500);
                                 }}
-                                className="px-6 py-2 bg-violet-500/10 border border-violet-500/30 rounded-xl text-[9px] font-black uppercase text-violet-400 hover:bg-violet-500/20 transition-all backdrop-blur-md"
+                                className="px-6 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase text-slate-400 hover:bg-white/10 transition-all"
                             >
                                 Reconnect Uplink
                             </button>
                             <button
                                 type="button"
                                 onClick={() => {
+                                    console.warn("Solaris: Nuclear Override Activated.");
+                                    const mock = "UPLINK STABLE. Reporting environmental breach in Ward K-West. Evidence logs generated at " + new Date().toLocaleTimeString();
                                     setError(null);
-                                    const mock = "Simulated Solaris uplink active. Reporting a significant civic breach. Visual evidence corroborates asphalt degradation and drainage failure.";
                                     setTranscript(mock);
-                                    if (onTranscript) onTranscript(mock);
+                                    if (onTranscript) {
+                                        console.log("Solaris: Transmitting to Lens...");
+                                        onTranscript(mock);
+                                    }
                                 }}
-                                className="px-6 py-3 bg-sky-500/20 border border-sky-400/50 rounded-xl text-[10px] font-black uppercase text-white hover:bg-sky-500/40 transition-all haptic-pulse shadow-[0_0_20px_rgba(56,189,248,0.3)] animate-pulse"
+                                className="px-6 py-4 bg-emerald-500/20 border border-emerald-400/50 rounded-2xl text-[12px] font-black uppercase text-emerald-400 hover:bg-emerald-500/30 transition-all haptic-pulse shadow-[0_0_40px_rgba(52,211,153,0.3)] animate-pulse"
                             >
-                                Activate Manual Uplink (Override)
+                                ⚡ NUCLEAR OVERRIDE: FORCE UPLINK ⚡
                             </button>
                         </div>
                     </motion.div>
@@ -184,7 +189,10 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.9, opacity: 0 }}
-                                onClick={() => startRecording()}
+                                onClick={() => {
+                                    console.log("Solaris: Initializing Voice Capture...");
+                                    startRecording();
+                                }}
                                 className="w-20 h-20 rounded-full flex items-center justify-center bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 transition-all duration-500 group relative"
                             >
                                 <Mic size={32} />
@@ -195,7 +203,10 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                 type="button"
                                 initial={{ scale: 0.8 }}
                                 animate={{ scale: 1 }}
-                                onClick={stopRecording}
+                                onClick={() => {
+                                    console.log("Solaris: Terminating Capture Session.");
+                                    stopRecording();
+                                }}
                                 className="w-20 h-20 rounded-full flex items-center justify-center bg-rose-500 shadow-[0_0_30px_#f43f5e] group relative"
                             >
                                 <motion.div
@@ -233,6 +244,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
                                     <button
                                         type="button"
                                         onClick={() => {
+                                            console.log("Solaris: Resetting Session...");
                                             setTranscript("");
                                             startRecording();
                                         }}
@@ -248,7 +260,7 @@ export default function VoiceReporter({ onTranscript, onStatusChange }: VoiceRep
             </div>
 
             <p className="text-center text-[10px] text-slate-600 font-black uppercase tracking-[0.2em]">
-                Active Speech Synthesis: Enabled (EN-IN) | SOLARIS V9.0 GOLD ALPHA
+                Active Speech Synthesis: Enabled (EN-IN) | SOLARIS V10.0 NUCLEAR ALPHA
             </p>
         </div>
     );
