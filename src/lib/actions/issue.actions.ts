@@ -72,6 +72,8 @@ export async function createIssue(params: CreateIssueParams) {
 
         revalidatePath("/");
         revalidatePath("/dashboard");
+        revalidatePath("/map");
+        revalidatePath("/rankings");
         return { success: true, message: "Issue reported successfully to the Accountability Grid.", issueId: issue.id };
     } catch (error) {
         console.error("Error creating issue:", error);

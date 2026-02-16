@@ -162,6 +162,8 @@ export default function IssueDrawer({ isOpen, onClose }: IssueDrawerProps) {
                         setSuccess(false);
                         setAudit(null);
                         setIntegrity(null);
+                        // Force Global Stream Sync
+                        window.location.reload();
                     }, 500);
                 }, 1500);
             }
