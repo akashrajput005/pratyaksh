@@ -59,9 +59,11 @@ export default function Dashboard() {
 
     useEffect(() => {
         const fetchData = async () => {
+            const stored = localStorage.getItem('solaris_user');
+            const userId = stored ? JSON.parse(stored).id : "user_clerk_123";
             const data = await getAllIssues();
             setIssues(data);
-            const stats = await getUserStats("user_clerk_123");
+            const stats = await getUserStats(userId);
             setUserStats(stats);
             setIsLoading(false);
         };
@@ -251,13 +253,13 @@ export default function Dashboard() {
                         <div className="grid grid-cols-2 gap-3 w-full px-4 text-center">
                             {[
                                 { id: "AIP", status: metrics.truthScore > 99.5 ? "GOLD" : "PASS" },
-                                { id: "EXIF", status: "SYNC" },
+                                { id: "EXIF", status: Math.random() > 0.5 ? "SYNC" : "UPLINK" },
                                 { id: "GEO", status: "LIVE" },
-                                { id: "NLP", status: "SYNC" }
+                                { id: "NLP", status: Math.random() > 0.3 ? "PASS" : "SYNC" }
                             ].map((p) => (
                                 <div key={p.id} className="p-3 rounded-2xl bg-white/5 border border-white/5 group hover:border-neon-gold transition-colors">
                                     <p className="text-[8px] font-black text-white/40 mb-1">{p.id}</p>
-                                    <p className="text-[10px] font-black text-neon-gold">{p.status}</p>
+                                    <p className="text-[10px] font-black text-neon-gold uppercase">{p.status}</p>
                                 </div>
                             ))}
                         </div>

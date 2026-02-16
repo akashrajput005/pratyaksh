@@ -15,26 +15,18 @@ export default function GlobalHeader() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState("GUEST_LINK_PENDING");
 
-    useEffect(() => {
-        const stored = localStorage.getItem('solaris_user');
-        if (stored) {
-            const data = JSON.parse(stored);
-            if (data.name) setUserName(data.name);
-            setIsLoggedIn(true);
+    // Sync rank with dashboard logic
+    const fetchStats = async () => {
+        try {
+            const stored = localStorage.getItem('solaris_user');
+            const userId = stored ? JSON.parse(stored).id : "user_clerk_123";
+            const { getUserStats } = await import("@/lib/actions/issue.actions");
+            const stats = await getUserStats(userId);
+            setUserRole(stats.trustLevel);
+        } catch (e) {
+            console.error("Rank Sync Failure", e);
         }
-
-        // Sync rank with dashboard logic
-        const fetchStats = async () => {
-            try {
-                const { getUserStats } = await import("@/lib/actions/issue.actions");
-                const stats = await getUserStats("user_clerk_123");
-                setUserRole(stats.trustLevel);
-            } catch (e) {
-                console.error("Rank Sync Failure", e);
-            }
-        };
-        fetchStats();
-    }, [isProfileOpen]);
+    };
 
     const handleSignOut = () => {
         localStorage.removeItem('solaris_user');

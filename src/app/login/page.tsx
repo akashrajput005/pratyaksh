@@ -14,7 +14,14 @@ export default function LoginPage() {
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        // Direct navigation for faster user flow in dev
+
+        // Persistent Session Uplink
+        localStorage.setItem('solaris_user', JSON.stringify({
+            name: "Akash Sharma",
+            role: "Solaris Pro",
+            id: "user_sol_777"
+        }));
+
         setTimeout(() => {
             router.push("/dashboard");
         }, 800);
